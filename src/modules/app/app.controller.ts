@@ -20,7 +20,7 @@ export class AppController {
   /**
    * Constructor
    * @param appService
-   * @param profileService
+   * @param userService
    */
   constructor(
     private readonly userService: UserService,
@@ -95,7 +95,7 @@ export class AppController {
   async sendNotification(@Req() req , @Body() body: sendNotificationPayload): Promise<Partial<INotification | null>> {
     const tenantId = req.user._id.toString()
     // here send data to SQS redis 
-    const { hostId , customMessage} = body; 
+    const { hostId , mobileNumber ,customMessage} = body; 
     const key = `${hostId}-${req.user._id}`
     const data = {
       redisKey : key, 
@@ -106,17 +106,19 @@ export class AppController {
         date: Date.now(),
       }
     }
-    this.sqsRedisHelper.addNotificationToRedis(key, tenantId, hostId, {
-      customMessage, 
-      date: Date.now(),
-    })
-
+  
     const sendNotificationTOdb = await this.userService.createNotification(data);
     if (!sendNotificationTOdb) {
       throw new BadRequestException(
         "Something went wrong.",
       );
     } else {
+      this.sqsRedisHelper.addNotificationToRedis(sendNotificationTOdb._id.toString(), tenantId, hostId, {
+        mobileNumber: mobileNumber,
+        customMessage,
+        date: Date.now(),
+      })
+
       return sendNotificationTOdb
     }
   }

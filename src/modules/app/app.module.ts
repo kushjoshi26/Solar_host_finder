@@ -17,6 +17,7 @@ import { SocketModule } from "Socket/socket.module";
 import { RedisModule } from '../redis/redis.module';
 import { ThrottlerModule } from "@nestjs/throttler";
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
+import { RedisSQSHelper } from "modules/redis/redis-sqs-helper";
 
 
 @Module({
@@ -86,6 +87,7 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
           };
       },
     }),
+    
     SocketModule,
     // AccessControlModule.forRoles(roles),
     ConfigModule,

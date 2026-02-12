@@ -6,6 +6,8 @@ import {
   IsAlphanumeric,
   IsMongoId,
   MaxLength,
+  IsMobilePhone,
+  isNotEmpty,
 } from "class-validator";
 
 /**
@@ -28,4 +30,9 @@ export class sendNotificationPayload {
   @IsNotEmpty()
   @MaxLength(300)
   customMessage: string;
+
+  @IsMobilePhone()
+  @IsNotEmpty()
+  mobileNumber: string;
+
 }

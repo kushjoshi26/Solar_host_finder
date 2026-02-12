@@ -1,5 +1,5 @@
 import { parse } from "dotenv";
-import * as joi from "@hapi/joi";
+import * as Joi from 'joi'
 import * as fs from "fs";
 
 /**
@@ -37,17 +37,17 @@ export class ConfigService {
     /**
      * A schema to validate envConfig against
      */
-    const envVarsSchema: joi.ObjectSchema = joi.object({
-      APP_ENV: joi
+    const envVarsSchema: Joi.ObjectSchema = Joi.object({
+      APP_ENV: Joi
         .string()
         .valid("dev", "prod")
         .default("dev"),
-      APP_URL: joi.string().uri({
+      APP_URL: Joi.string().uri({
         scheme: [/https?/],
       }),
-      WEBTOKEN_SECRET_KEY: joi.string().required(),
-      WEBTOKEN_EXPIRATION_TIME: joi.number().default(1800),
-      DB_URL: joi.string().regex(/^mongodb/),
+      WEBTOKEN_SECRET_KEY: Joi.string().required(),
+      WEBTOKEN_EXPIRATION_TIME: Joi.number().default(1800),
+      DB_URL: Joi.string().regex(/^mongodb/),
     });
 
     /**

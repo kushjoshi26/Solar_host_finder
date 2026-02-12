@@ -12,7 +12,8 @@ export const User = new Schema({
   email: { type: String, required: true },
   name: { type: String, required: true },
   password: { type: String, required: true },
-  city: {type : String,  require:  true},
+  city: { type: String, require: true },
+  mobileNumber: { type: String, require: true },
   location: {
     type: {
       type: String,
@@ -70,5 +71,10 @@ export interface IUser extends Document {
    * Location
    */
   readonly location: [string, string];
+
+  /**
+  * mobileNumber
+  */
+  readonly mobileNumber: string;
 
 }

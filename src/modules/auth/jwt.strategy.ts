@@ -3,7 +3,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
 import { ConfigService } from "../config/config.service";
-import { ProfileService } from "../user/user.service";
+import { UserService } from "../user/user.service";
 
 /**
  * Jwt Strategy Class
@@ -13,11 +13,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   /**
    * Constructor
    * @param {ConfigService} configService
-   * @param {ProfileService} profileService
+   * @param {UserService} userService
    */
   constructor(
     readonly configService: ConfigService,
-    private readonly profileService: ProfileService,
+    private readonly userService: UserService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -38,7 +38,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
 
-    const user = await this.profileService.get(_id);
+    const user = await this.userService.get(_id);
     if (!user) {
       throw new UnauthorizedException();
     }

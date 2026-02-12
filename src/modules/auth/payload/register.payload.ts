@@ -7,6 +7,7 @@ import {
   IsEnum,
   IsLatitude,
   IsLongitude,
+  IsMobilePhone,
 } from "class-validator";
 import { UserTypes } from "modules/user/user.model";
 
@@ -56,6 +57,10 @@ export class RegisterPayload {
 
   @IsLongitude()
   longitude: number;
+
+  @IsMobilePhone()
+  @IsNotEmpty()
+  mobileNumber: string;
 
 
 }
