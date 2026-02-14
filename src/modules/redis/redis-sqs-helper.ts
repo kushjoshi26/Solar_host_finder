@@ -14,7 +14,7 @@ export class RedisSQSHelper {
         mongoId: string,
         tenantId: string,
         userId: string,
-        notificationData: any
+        notificationData: { mobileNumber: string, customMessage: string,  date: number}
     ): Promise<number> {
         // store data for 24 hours 
 

@@ -42,7 +42,7 @@ export interface INotification extends Document {
     /**
      * NotificationData
      */
-    readonly NotificationData: string;
+    readonly NotificationData: JSON;
     /**
      * Date
      */

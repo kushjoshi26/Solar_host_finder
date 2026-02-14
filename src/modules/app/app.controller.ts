@@ -70,7 +70,7 @@ export class AppController {
     }
     let radius = 4;
     //  we need to get radius from env 
-    const getDataFromTheCity: any = await this.geoLocationHelper.getNearby(cityKey, longitude, latitude, radius, 'km');
+    const getDataFromTheCity = await this.geoLocationHelper.getNearby(cityKey, longitude, latitude, radius, 'km');
     if (!getDataFromTheCity) {
       // here cache miss 
       const findDataFromDB = await this.userService.getHosts(cityKey, longitude, latitude, radius * 1000);
@@ -80,7 +80,7 @@ export class AppController {
         return findDataFromDB
       }
     } else {
-      return getDataFromTheCity
+      return getDataFromTheCity as IUser[]
     }
   }
 
@@ -102,6 +102,7 @@ export class AppController {
       tenantId,
       hostId,
       notificationData: {
+        mobileNumber: mobileNumber,
         customMessage, 
         date: Date.now(),
       }
