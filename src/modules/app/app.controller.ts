@@ -61,8 +61,8 @@ export class AppController {
           "Something went wrong.",
         );
       }
-      latitude = findDataFromDB.location[0]
-      longitude = findDataFromDB.location[1]
+      latitude = findDataFromDB.location[1]
+      longitude = findDataFromDB.location[0]
     } else {
       const locationObj = JSON.parse(findUserLocation);
       latitude = locationObj.latitude
