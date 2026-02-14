@@ -28,7 +28,6 @@ export class RedisGeoHelper {
         );
     }
 
-
     /**
    * Add or Update Location (GEOADD)
    */

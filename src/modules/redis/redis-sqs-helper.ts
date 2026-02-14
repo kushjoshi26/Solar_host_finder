@@ -29,7 +29,7 @@ export class RedisSQSHelper {
     }
 
     /**
-     * Remove whole notification array 
+     * Remove whole notifications array 
      */
     async removeNotification(key: string): Promise<number> {
         return this.redisClient.del(key);

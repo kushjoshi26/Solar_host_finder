@@ -12,9 +12,6 @@ import { RedisGeoHelper } from '../modules/redis/redis-geo.helper';
 import { UseGuards } from '@nestjs/common';
 import { SocketAuthGuard } from './socket-auth.guard';
 
-
-
-
 @WebSocketGateway({
     cors: {
         origin: '*',

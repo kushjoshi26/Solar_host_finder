@@ -123,6 +123,7 @@ export class UserService {
     }
     // this will auto assign the admin role to each created user
     const createduser = new this.userModel({
+      location: [payload.latitude, payload.longitude],
       ...payload,
       password: crypto.createHmac("sha256", payload.password).digest("hex"),
       type: user.userType
