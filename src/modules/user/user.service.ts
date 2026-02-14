@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import * as crypto from "crypto";
 import * as gravatar from "gravatar";
 import { Model } from "mongoose";
@@ -33,10 +34,14 @@ export class UserService {
    * Constructor
    * @param {Model<IUser>} userModel
    */
+  private saltRound: number
   constructor(
     @InjectModel("User") private readonly userModel: Model<IUser>,
     @InjectModel("Notification") private readonly notificationModel: Model<INotification>,
-  ) { }
+  
+  ) {
+    this.saltRound = 10
+   }
 
   /**
    * Fetches a user from database by UUID
@@ -100,13 +105,19 @@ export class UserService {
    * @param {string} password
    * @returns {Promise<IUser>} queried user data
    */
-  getByEmailAndPass(email: string, password: string): Promise<IUser> {
-    return this.userModel
+  async getByEmailAndPass(email: string, password: string): Promise<IUser> {
+    const userData =  await this.userModel
       .findOne({
         email,
-        password: crypto.createHmac("sha256", password).digest("hex"),
       })
       .exec();
+    if (userData) {
+    const isPasswordValid =  await bcrypt.compare(password, userData.password);
+      if(isPasswordValid) {
+        delete userData.password 
+        return userData
+      }
+    }
   }
 
   /**
@@ -123,9 +134,9 @@ export class UserService {
     }
     // this will auto assign the admin role to each created user
     const createduser = new this.userModel({
-      location: [payload.longitude, payload.latitude],
       ...payload,
-      password: crypto.createHmac("sha256", payload.password).digest("hex"),
+      location: [payload.longitude, payload.latitude],
+      password: bcrypt.hash(payload.password, this.saltRound),
       type: user.userType
     });
 

@@ -32,6 +32,7 @@ export const User = new Schema({
     default: Date.now,
   },
 });
+User.index({ location: "2dsphere" });
 
 /**
  * Mongoose Profile Document

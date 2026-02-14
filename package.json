@@ -34,6 +34,7 @@
     "@nestjs/websockets": "^11.1.13",
     "@types/cache-manager": "^4.0.6",
     "@willsoto/nestjs-prometheus": "^6.0.2",
+    "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "cache-manager-redis-store": "^3.0.1",
     "class-transformer": "0.5.1",
